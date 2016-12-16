@@ -1,0 +1,35 @@
+Bucket List | Home | <a href="/">Logout</a>
+
+<hr>
+
+<h1 ng-if="loggedUser">Welcome {{loggedUser.name}}</h1>
+
+<div ng-repeat="error in errors track by $index"> 
+	<p style='color:red'> {{error.message}} </p>
+</div>
+
+<form ng-submit="createTask()">
+	<input type="text" ng-model="title" placeholder="Title"> 
+	<input type="text" ng-model="description" placeholder="Description"> 
+	<select ng-model="_taggedUser">
+		<option ng-repeat="user in users" ng-if="user.name !== loggedUser.name" value="{{user.name}}">{{user.name}}</option>
+	</select> 
+	<input type="submit" value="Add to List">
+</form>
+
+<h3>Before I die I want to...</h3>
+
+<form>
+
+	<div ng-repeat="task in pendingTasks track by $index">
+	<input ng-click="complete($index)" type="checkbox"> {{task.title}} - {{task.description}}
+	</div> 
+
+	<div ng-repeat="task in finishedTasks track by $index">
+	<input type="checkbox"> {{task.title}} - {{task.description}}
+	</div> 
+
+</form> 
+
+<h3>List of other users (Click to view profile)</h3>
+<p ng-repeat="user in users track by $index" ng-if="user.name !== loggedUser.name"> <a href="#!/show/{{user._id}}">{{ user.name }} </a></p>
